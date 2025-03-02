@@ -1,2 +1,35 @@
-client
-server
+# 🚀 Node.js & Express (Backend)
+server/node_modules/
+server/package-lock.json
+server/.env
+server/.DS_Store
+server/dist/
+server/logs/
+server/debug.log
+
+# 🚀 React (Frontend)
+client/node_modules/
+client/package-lock.json
+client/.env
+client/.DS_Store
+client/build/
+client/.parcel-cache/
+client/.next/
+client/yarn.lock
+
+# 🛠️ OS/IDE Specific
+*.log
+*.swp
+*.swo
+.vscode/
+.idea/
+.DS_Store
+*.bak
+*.tmp
+
+# 🔥 MongoDB Data (Avoid committing local DB files)
+*.json
+*.dump
+dump/
+data/
+mongodb.log
