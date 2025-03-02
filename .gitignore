@@ -34,3 +34,5 @@ crypto-frontend/yarn.lock
 dump/
 data/
 mongodb.log
+
+.venv
