@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // State to store error messages
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); // Clear previous errors
+    setError("");
 
     try {
       const response = await axios.post("http://localhost:5000/api/auth/login", {
@@ -25,15 +25,9 @@ const Login = () => {
       // Redirect to the portfolio page
       navigate("/portfolio");
     } catch (error) {
-      // Handle errors
       if (error.response) {
-        // The server responded with a status code outside the 2xx range
         setError(error.response.data.error || "Login failed. Please try again.");
-      } else if (error.request) {
-        // The request was made but no response was received
-        setError("No response from the server. Please check your connection.");
       } else {
-        // Something happened in setting up the request
         setError("An unexpected error occurred. Please try again.");
       }
       console.error("Login error:", error);
@@ -41,9 +35,9 @@ const Login = () => {
   };
 
   return (
-    <div className="buy-sell-container">
+    <div className="login-container">
       <h2>Login</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>} {/* Display error message */}
+      {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleLogin}>
         <input
           type="email"
@@ -61,6 +55,9 @@ const Login = () => {
         />
         <button type="submit">Login</button>
       </form>
+      <p>
+        Don't have an account? <a href="/signup">Sign up</a>
+      </p>
     </div>
   );
 };

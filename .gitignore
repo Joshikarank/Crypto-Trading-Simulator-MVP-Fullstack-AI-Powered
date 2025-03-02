@@ -8,14 +8,15 @@ server/logs/
 server/debug.log
 
 # 🚀 React (Frontend)
-client/node_modules/
-client/package-lock.json
-client/.env
-client/.DS_Store
-client/build/
-client/.parcel-cache/
-client/.next/
-client/yarn.lock
+crypto-frontend/node_modules/
+crypto-frontend/package-lock.json
+crypto-frontend/.env
+crypto-frontend/.DS_Store
+crypto-frontend/build/
+crypto-frontend/.parcel-cache/
+crypto-frontend/.next/
+crypto-frontend/yarn.lock
+
 
 # 🛠️ OS/IDE Specific
 *.log

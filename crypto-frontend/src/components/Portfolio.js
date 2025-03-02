@@ -22,7 +22,7 @@ const Portfolio = () => {
   if (!portfolio) return <div>Loading...</div>;
 
   return (
-    <div className="portfolio">
+    <div className="portfolio-container">
       <h2>Portfolio</h2>
       <p>Balance: ₹{portfolio.balance}</p>
       <h3>Holdings:</h3>
