@@ -18,12 +18,14 @@ app.use((req, res, next) => {
 
 // Import Routes
 const authRoutes = require("./routes/authRoutes");
-const portfolioRoutes = require("./routes/portfolioRoutes");
+// const portfolioRoutes = require("./routes/portfolioRoutes");
+
 const cryptoRoutes = require("./routes/cryptoRoutes");
 
 app.use("/api/auth", authRoutes);
-app.use("/api/portfolio", portfolioRoutes);
+// app.use("/api/portfolio", portfolioRoutes);
 app.use("/api/crypto", cryptoRoutes);
+app.use("/api/portfolio", cryptoRoutes);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })

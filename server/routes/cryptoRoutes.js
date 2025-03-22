@@ -7,6 +7,17 @@ const Portfolio = require("../models/Portfolio");
 const router = express.Router();
 const COINGECKO_API = "https://api.coingecko.com/api/v3/simple/price"; // CoinGecko API for live prices
 
+// ✅ Get All Supported Coin IDs (for frontend dropdown)
+router.get("/coins/list", async (req, res) => {
+  try {
+    const { data } = await axios.get("https://api.coingecko.com/api/v3/coins/list");
+    res.json(data); // array of { id, symbol, name }
+  } catch (err) {
+    console.error("❌ Error fetching coin list:", err.message);
+    res.status(500).json({ error: "Failed to fetch coins list" });
+  }
+});
+
 // ✅ Buy Crypto (Virtual Trade)
 router.post("/buy", async (req, res) => {
   const { userId } = req; // Extract userId from authMiddleware

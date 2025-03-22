@@ -7,6 +7,8 @@ server/dist/
 server/logs/
 server/debug.log
 
+crypto-frontend
+
 # 🚀 React (Frontend)
 crypto-frontend/node_modules/
 crypto-frontend/package-lock.json
