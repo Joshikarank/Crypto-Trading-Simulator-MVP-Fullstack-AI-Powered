@@ -3,8 +3,18 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
+
+
 dotenv.config();
 const app = express();
+
+const path = require("path"); 
+app.use(express.static(path.join(__dirname, "public")));
+
+// ✅ Default route for index.html
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 // ✅ Middleware to Parse JSON (Fixes req.body issue)
 app.use(express.json()); 
@@ -18,12 +28,12 @@ app.use((req, res, next) => {
 
 // Import Routes
 const authRoutes = require("./routes/authRoutes");
-// const portfolioRoutes = require("./routes/portfolioRoutes");
+const portfolioRoutes = require("./routes/portfolioRoutes");
 
 const cryptoRoutes = require("./routes/cryptoRoutes");
 
 app.use("/api/auth", authRoutes);
-// app.use("/api/portfolio", portfolioRoutes);
+app.use("/api/portfolio", portfolioRoutes);
 app.use("/api/crypto", cryptoRoutes);
 app.use("/api/portfolio", cryptoRoutes);
 
@@ -41,4 +51,6 @@ process.on("unhandledRejection", (reason, promise) => {
   console.error("🔥 Unhandled Promise Rejection:", reason);
 });
 
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
+});

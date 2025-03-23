@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Buy Coin by Name</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🪙 Manual Buy</h1>
+    <p>Find coins at <a href="https://www.coingecko.com/en" target="_blank">CoinGecko</a>, then enter the coin ID below:</p>
+    
+    <input type="text" id="coinName" placeholder="Enter Coin ID (e.g. bitcoin, dogecoin)" />
+    <button id="fetchBtn">🔍 Get Price</button>
+
+    <div id="coinDetails" style="margin-top: 20px;"></div>
+
+    <button onclick="window.location.href='dashboard.html'">⬅️ Back to Dashboard</button>
+  </div>
+
+  <script src="js/manualbuy.js"></script>
+</body>
+</html>
