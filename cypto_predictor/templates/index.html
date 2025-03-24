@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crypto Predictions</title>
+</head>
+<body>
+  <h1>📈 Crypto Price Forecasts</h1>
+  {% for p in predictions %}
+    <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+      <h2>{{ p.coin }}</h2>
+      {% if p.error %}
+      <p style="color:red;"><strong>Error:</strong> {{ p.error }}</p>   
+      {% else %}
+        <p><strong>Current Price:</strong> ₹{{ p.actual_price }}</p>
+        <p><strong>Next Hour Prediction {{ p.timestamp }}:</strong> ₹{{ p.predicted_price }}</p>
+        <p><strong>Confidence:</strong> {{ p.confidence }}%</p>
+        <p><strong>Last Updated:</strong> {{ p.last_updated }}</p>
+        <p><em>Market Timestamp:</em> {{ p.timestamp }}</p>
+      {% endif %}
+      <h4>Prediction History:</h4>
+        <ul>
+        {% for h in p.history %}
+            <li>
+            {{ h.timestamp }} — ₹{{ h.predicted_price }} — ₹{{ h.actual_price }} — {{ h.accuracy }}%
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+  {% endfor %}  
+</body>
+</html>
