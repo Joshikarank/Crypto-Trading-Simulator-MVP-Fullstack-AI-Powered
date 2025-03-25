@@ -6,6 +6,7 @@ server/.DS_Store
 server/dist/
 server/logs/
 server/debug.log
+crypto_predictor/models
 
 crypto-frontend
 
@@ -38,3 +39,4 @@ data/
 mongodb.log
 
 .venv
+
