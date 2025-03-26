@@ -21,8 +21,9 @@ def fetch_hourly_data(coin, days=7):
     res = requests.get(url, params=params, headers=headers)
 
     if res.status_code != 200:
-        raise ValueError(f"Coin '{coin}' not found or unsupported by CoinGecko API.")
-
+        raise ValueError(f"Coin '{coin}' not found or CoinGecko API rate limit.")
+    if res.status_code == 429:
+        raise ValueError("🚫 Rate limit hit. Try again in a few seconds.")
     data = res.json()
     if "prices" not in data or "total_volumes" not in data:
         raise ValueError(f"Incomplete data returned for '{coin}'. Try a different coin.")
@@ -88,16 +89,28 @@ def save_prediction_log(coin, entry):
     with open(log_path, "w") as f:
         json.dump(history, f, indent=2)
 
-def load_prediction_log(coin):
+
+def load_prediction_log(coin, hours=5):
     log_path = f"{LOG_DIR}/{coin}_log.json"
-    if os.path.exists(log_path):
-        try:
-            with open(log_path, "r") as f:
-                return json.load(f)
-        except json.JSONDecodeError:
-            print(f"⚠️ Corrupted log file for {coin}, resetting.")
-            os.remove(log_path)
-    return []
+    if not os.path.exists(log_path):
+        return []
+
+    try:
+        with open(log_path, "r") as f:
+            logs = json.load(f)
+    except json.JSONDecodeError:
+        print(f"⚠️ Corrupted log file for {coin}, resetting.")
+        os.remove(log_path)
+        return []
+
+    # Convert timestamps to datetime objects
+    ist = timezone('Asia/Kolkata')
+    now = datetime.now(ist)
+    recent_logs = [
+        entry for entry in logs
+        if ist.localize(datetime.strptime(entry["timestamp"], "%Y-%m-%d %H:%M")) >= (now - timedelta(hours=hours))
+    ]
+    return recent_logs
 
 def predict_latest(coin):
     model_path = f"{MODEL_DIR}/{coin}_1h.pkl"
@@ -122,11 +135,12 @@ def predict_latest(coin):
     ts_utc = df.iloc[-1]['timestamp']
     ist = timezone('Asia/Kolkata')
     ts_ist = ts_utc.tz_localize('UTC').astimezone(ist)
+    predicted_ts = ts_ist + timedelta(hours=1)
 
     confidence = round(100 - (mae / df['price'].mean() * 100), 2)
-
+    
     log_entry = {
-        "timestamp": ts_ist.strftime("%Y-%m-%d %H:%M"),
+        "timestamp": predicted_ts.strftime("%Y-%m-%d %H:%M"),
         "predicted_price": float(round(last_pred, 2)),
         "actual_price": float(round(actual, 2)),
         "accuracy": float(confidence)

@@ -2,22 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sign Up - Crypto App</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <title>Sign Up - Crypto Paper Trading</title>
+  <link rel="stylesheet" href="css/signupstyles.css">
 </head>
 <body>
-  <div class="container">
-    <h1>🆕 Sign Up</h1>
+  <div class="container animate-fade-in">
+    <h1 class="slide-in-top">🆕 Create Your Account</h1>
+    <h2 class="subtitle slide-in-top-delay">Start Paper Trading with AI ✨</h2>
 
-    <input type="text" id="name" placeholder="Name" required />
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="password" placeholder="Password" required />
+    <input type="text" id="name" placeholder="Name" required class="fade-in-delay" />
+    <input type="email" id="email" placeholder="Email" required class="fade-in-delay" />
+    <input type="password" id="password" placeholder="Password" required class="fade-in-delay" />
 
-    <button id="signupBtn">Create Account</button>
+    <button id="signupBtn" class="fade-in-delay">Create Account</button>
 
-    <p id="statusMsg"></p>
+    <p id="statusMsg" class="fade-in-delay"></p>
 
-    <p>Already have an account? <a href="index.html">Login</a></p>
+    <p class="fade-in-delay">Already have an account? <a href="index.html">Login</a></p>
+
+    <p class="credits fade-in-delay">Made by <strong>Joshikaran</strong></p>
+  </div>
+
+  <div class="marquee">
+    <p>💡 Smart trades &nbsp;&nbsp; 🤖 AI-driven decisions &nbsp;&nbsp; 📈 Track growth virtually &nbsp;&nbsp; 🧠 Learn without risk &nbsp;&nbsp; 🚀 Powered by passion</p>
   </div>
 
   <script src="js/signup.js"></script>

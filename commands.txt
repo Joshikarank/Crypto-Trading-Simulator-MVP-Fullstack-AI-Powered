@@ -1,15 +1,6 @@
 npm start
+
+cd sever
 npx nodemon server.js
 
-
-
-
-
-curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=153770359614" \
--H 'Content-Type: application/json' \
--X POST \
--d '{
-  "contents": [{
-    "parts":[{"text": "Explain how AI works"}]
-    }]
-   }'
+(.venv) PS D:\crypto_paper> python felix_ai\pns.py

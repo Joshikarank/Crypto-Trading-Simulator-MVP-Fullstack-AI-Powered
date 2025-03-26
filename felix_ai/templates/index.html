@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Felix AI Chatbot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #222222;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .chat-container {
+            width: 400px;
+            height: 600px;
+            background: #333333;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        #chat-box {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            animation: fadeIn 0.5s ease-out;
+        }
+        #chat-box::-webkit-scrollbar {
+            width: 5px;
+        }
+        #chat-box::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        .message {
+            display: flex;
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: slideIn 0.5s forwards;
+        }
+        .message.bot {
+            justify-content: flex-start;
+        }
+        .message.user {
+            justify-content: flex-end;
+        }
+        .message.bot .message-text {
+            background-color: #4CAF50;
+            color: #fff;
+            border-radius: 20px;
+            padding: 10px 20px;
+            max-width: 70%;
+            position: relative;
+        }
+        .message.user .message-text {
+            background-color: #009688;
+            color: #fff;
+            border-radius: 20px;
+            padding: 10px 20px;
+            max-width: 70%;
+            position: relative;
+        }
+        input[type="text"] {
+            padding: 15px;
+            border: none;
+            outline: none;
+            border-radius: 25px;
+            margin: 10px;
+            width: calc(100% - 40px);
+            font-size: 14px;
+            background-color: #444444;
+            color: #fff;
+            transition: all 0.3s ease-in-out;
+        }
+        input[type="text"]:focus {
+            background-color: #555555;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .title-container {
+            width: 100%;
+            padding: 20px;
+            background-color: #333333;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .title-container h1 {
+            margin: 0;
+            color: #fff;
+        }
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .back-button:hover {
+            background-color: #e53935;
+        }
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="title-container">
+        <h1>Felix AI - Crypto Chatbot</h1>
+        <p>Get the latest insights and tips about cryptocurrency.</p>
+    </div>
+
+    <div class="chat-container">
+        <div id="chat-box"></div>
+        <div>
+            <input type="text" id="user-input" placeholder="Ask about crypto..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <button class="back-button" onclick="window.location.href='http://127.0.0.1:5000/dashboard.html'">Back to Dashboard</button>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+
+        function appendMessage(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', sender);
+            const messageText = document.createElement('div');
+            messageText.classList.add('message-text');
+            messageText.textContent = message;
+            messageDiv.appendChild(messageText);
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (message === '') return;
+
+            appendMessage(message, 'user');
+            userInput.value = '';
+
+            // Send the message to Flask API and get the response
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: message })
+            });
+
+            const data = await response.json();
+            appendMessage(data.response, 'bot');
+        }
+    </script>
+</body>
+</html>

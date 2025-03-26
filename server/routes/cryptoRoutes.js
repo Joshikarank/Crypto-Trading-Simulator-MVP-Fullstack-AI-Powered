@@ -100,44 +100,44 @@ router.get("/:userId", async (req, res) => {
 });
 
 // ✅ Sell Crypto – Use Live Prices
-router.post("/sell", async (req, res) => {
-  const { userId, coin, amount } = req.body;
+// router.post("/sell", async (req, res) => {
+//   const { userId, coin, amount } = req.body;
 
-  try {
-    const portfolio = await Portfolio.findOne({ userId });
+//   try {
+//     const portfolio = await Portfolio.findOne({ userId });
 
-    if (!portfolio) {
-      return res.status(400).json({ error: "Portfolio not found" });
-    }
+//     if (!portfolio) {
+//       return res.status(400).json({ error: "Portfolio not found" });
+//     }
 
-    const holding = portfolio.holdings.find((h) => h.coin === coin);
-    if (!holding || holding.amount < amount) {
-      return res.status(400).json({ error: "Not enough holdings to sell" });
-    }
+//     const holding = portfolio.holdings.find((h) => h.coin === coin);
+//     if (!holding || holding.amount < amount) {
+//       return res.status(400).json({ error: "Not enough holdings to sell" });
+//     }
 
-    // 🔥 Get live price from CoinGecko
-    const { data } = await axios.get(`${COINGECKO_API}?ids=${coin}&vs_currencies=inr`);
-    const sellPrice = data[coin].inr;
+//     // 🔥 Get live price from CoinGecko
+//     const { data } = await axios.get(`${COINGECKO_API}?ids=${coin}&vs_currencies=inr`);
+//     const sellPrice = data[coin].inr;
     
-    const sellValue = sellPrice * amount;
-    const profitLoss = sellValue - (holding.buyPrice * amount);
+//     const sellValue = sellPrice * amount;
+//     const profitLoss = sellValue - (holding.buyPrice * amount);
 
-    // Deduct sold amount
-    holding.amount -= amount;
-    holding.invested -= holding.buyPrice * amount; // Reduce invested based on buy price
+//     // Deduct sold amount
+//     holding.amount -= amount;
+//     holding.invested -= holding.buyPrice * amount; // Reduce invested based on buy price
 
-    // Remove holding if all sold
-    if (holding.amount <= 0) {
-      portfolio.holdings = portfolio.holdings.filter((h) => h.coin !== coin);
-    }
+//     // Remove holding if all sold
+//     if (holding.amount <= 0) {
+//       portfolio.holdings = portfolio.holdings.filter((h) => h.coin !== coin);
+//     }
 
-    await portfolio.save();
-    res.json({ message: "Crypto Sold", sellPrice, sellValue, profitLoss, portfolio });
-  } catch (err) {
-    console.error("Selling crypto eror :", error); // 🔥 Logs the actual error
-    res.status(500).json({ error: err.message });
-  }
-});
+//     await portfolio.save();
+//     res.json({ message: "Crypto Sold", sellPrice, sellValue, profitLoss, portfolio });
+//   } catch (err) {
+//     console.error("Selling crypto eror :", error); // 🔥 Logs the actual error
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 
 // ✅ Get Live Crypto Prices (For UI Use)
 router.get("/price/:coin", async (req, res) => {

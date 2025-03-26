@@ -2,20 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login - Crypto Dashboard</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <title>Crypto Paper Trading with AI Assistant</title>
+  <link rel="stylesheet" href="css/loginstyles.css">
 </head>
 <body>
-  <div class="container">
-    <h1>🚀 Login</h1>
+  <div class="container animate-fade-in">
+    <h1 class="slide-in-top">🚀 Crypto Paper Trading</h1>
+    <h2 class="subtitle slide-in-top-delay">with AI Assistant</h2>
 
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="password" placeholder="Password" required />
+    <input type="email" id="email" placeholder="Email" required class="fade-in-delay" />
+    <input type="password" id="password" placeholder="Password" required class="fade-in-delay" />
 
-    <button id="loginBtn">Login</button>
-    <p>Don't have an account? <a href="signup.html" id="signupLink">Sign up here</a></p>
+    <button id="loginBtn" class="fade-in-delay">Login</button>
+    <p class="fade-in-delay">Don't have an account? <a href="signup.html" id="signupLink">Sign up here</a></p>
 
-    <p id="statusMsg"></p>
+    <p id="statusMsg" class="fade-in-delay"></p>
+
+    <p class="credits fade-in-delay">Made by <strong>Joshikaran</strong></p>
+  </div>
+
+  <div class="marquee">
+    <p>🌐 Completely virtual &nbsp;&nbsp; 🤖 AI-powered insights &nbsp;&nbsp; 📊 Predictive trading &nbsp;&nbsp; 💸 Smart portfolio simulation &nbsp;&nbsp; 🚀 Future of crypto trading</p>
   </div>
 
   <script src="js/auth.js"></script>

@@ -92,50 +92,88 @@ router.post("/buy", authMiddleware, async (req, res) => {
 
 
 // ✅ Sell Crypto (Now Accepts INR Instead of BTC)
-router.post("/sell", async (req, res) => {
-  const { coin, amountInINR } = req.body; // Accept INR instead of BTC amount
+
+router.post("/sell", authMiddleware, async (req, res) => {
+  const { coin, amountInINR } = req.body;
 
   try {
-    let portfolio = await Portfolio.findOne();
+    // 🔐 Require token + input validation
+    if (!req.userId) {
+      return res.status(401).json({ error: "Unauthorized – user ID missing" });
+    }
+
+    if (!coin || typeof amountInINR !== "number" || amountInINR <= 0) {
+      return res.status(400).json({ error: "Invalid request body" });
+    }
+
+    const normalizedCoin = coin.toLowerCase().trim();
+
+    // 📡 Fetch live price from CoinGecko
+    const { data } = await axios.get(`${COINGECKO_API}?ids=${normalizedCoin}&vs_currencies=inr`);
+    const sellPrice = data[normalizedCoin]?.inr;
+
+    if (!sellPrice || sellPrice < 1) {
+      return res.status(400).json({ error: "Invalid or suspicious coin price" });
+    }
+
+    // 🔍 Find portfolio by user
+    const portfolio = await Portfolio.findOne({ userId: req.userId });
     if (!portfolio) {
       return res.status(400).json({ error: "Portfolio not found" });
     }
 
-    const holding = portfolio.holdings.find((h) => h.coin === coin);
-    if (!holding || holding.invested < amountInINR) {
-      return res.status(400).json({ error: "Not enough holdings to sell" });
+    // 🔍 Check if coin exists in holdings
+    const holding = portfolio.holdings.find(
+      (h) => h.coin.toLowerCase().trim() === normalizedCoin
+    );
+
+    if (!holding) {
+      return res.status(400).json({ error: `You don't own any ${coin}` });
     }
 
-    // 🔥 Get live price from CoinGecko
-    const { data } = await axios.get(`${COINGECKO_API}?ids=${coin}&vs_currencies=inr`);
-    const sellPrice = data[coin].inr; // Current price in INR
-
-    // Convert INR to BTC equivalent
+    // 🧮 Calculate how much crypto to sell for the given INR
     const cryptoAmountToSell = amountInINR / sellPrice;
+    const currentHoldingValue = holding.amount * sellPrice;
 
-    // Deduct sold amount
+    if (holding.amount < cryptoAmountToSell) {
+      return res.status(400).json({
+        error: `Not enough ${coin} to sell ₹${amountInINR}. Your current holding is worth only ₹${currentHoldingValue.toFixed(2)}.`
+      });
+    }
+
+    // ✅ Perform the sale
     holding.amount -= cryptoAmountToSell;
     holding.invested -= amountInINR;
-
-    // Add INR back to balance
     portfolio.balance += amountInINR;
 
-    // Remove holding if all sold
-    if (holding.amount <= 0) {
-      portfolio.holdings = portfolio.holdings.filter((h) => h.coin !== coin);
+    // 🧽 Cleanup and rounding
+    if (holding.amount < 1e-8) {
+      portfolio.holdings = portfolio.holdings.filter(
+        (h) => h.coin.toLowerCase().trim() !== normalizedCoin
+      );
+    } else {
+      holding.amount = parseFloat(holding.amount.toFixed(8));
+      holding.invested = parseFloat(holding.invested.toFixed(2));
     }
 
+    portfolio.balance = parseFloat(portfolio.balance.toFixed(2));
+
     await portfolio.save();
-    res.json({ 
-      message: "Crypto Sold", 
-      soldAmount: cryptoAmountToSell, 
-      soldFor: amountInINR, 
-      portfolio 
+
+    res.json({
+      message: "Crypto Sold",
+      soldAmount: cryptoAmountToSell,
+      soldFor: amountInINR,
+      sellPrice,
+      portfolio
     });
+
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("🔥 Sell Error:", err.message);
+    res.status(500).json({ error: err.message || "Server Error" });
   }
 });
+
 
 // const authMiddleware = require("../middleware/authMiddleware");
 // // Apply authMiddleware to the /buy route

@@ -3,23 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <title>Dashboard - Crypto App</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/dashboardstyles.css" />
 </head>
 <body>
-  <div class="container">
-    <h1 id="welcomeMsg">👋 Welcome</h1>
-    <h2 id="balanceText">💰 Total Portfolio: Loading...</h2>
-    <h3 id="investedText">💼 Invested: ₹0</h3>
-    <h3 id="profitText">📈 Profit/Loss: ₹0 (0%)</h3>
+  <div class="container animate-fade-in">
+    <h1 id="welcomeMsg" class="slide-in-top">👋 Welcome</h1>
+    <h2 id="balanceText" class="fade-in-delay">💰 Total Portfolio: Loading...</h2>
+    <h3 id="investedText" class="fade-in-delay">💼 Invested: ₹0</h3>
+    <h3 id="profitText" class="fade-in-delay">📈 Profit/Loss: ₹0 (0%)</h3>
 
-    <h3>Your Holdings:</h3>
-    <div id="holdingsList"></div>
+    <h3 class="fade-in-delay">Your Holdings:</h3>
+    <div id="holdingsList" class="fade-in-delay"></div>
 
-
-    <button onclick="window.location.href='buycoins.html'">🌐 Explore More Coins</button>
-    
-
-    <button id="logoutBtn">🚪 Logout</button>
+    <button onclick="window.location.href='buycoins.html'" class="action-btn fade-in-delay">🌐 Explore More Coins</button>
+    <button onclick="window.location.href='http://127.0.0.1:5001/predict'" class="action-btn fade-in-delay">🧠 Predict Crypto Prices Using AI</button>
+    <button onclick="window.location.href='http://127.0.0.1:5002/felixai'" class="action-btn fade-in-delay">🤖 Ask your cryto doubts to Felix AI</button>
+    <button id="logoutBtn" class="logout-btn fade-in-delay">🚪 Logout</button>
   </div>
 
   <script src="js/dashboard.js"></script>
