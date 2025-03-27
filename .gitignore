@@ -9,6 +9,7 @@ server/debug.log
 crypto_predictor/models/
 
 crypto-frontend
+.env
 
 # 🚀 React (Frontend)
 crypto-frontend/node_modules/
