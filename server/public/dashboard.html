@@ -2,25 +2,116 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Dashboard - Crypto App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Crypto Trading simulator</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="css/dashboardstyles.css" />
 </head>
 <body>
-  <div class="container animate-fade-in">
-    <h1 id="welcomeMsg" class="slide-in-top">👋 Welcome</h1>
-    <h2 id="balanceText" class="fade-in-delay">💰 Total Portfolio: Loading...</h2>
-    <h3 id="investedText" class="fade-in-delay">💼 Invested: ₹0</h3>
-    <h3 id="profitText" class="fade-in-delay">📈 Profit/Loss: ₹0 (0%)</h3>
+  <!-- Floating Header -->
+  <header class="floating-header">
+    <div class="header-content">
+      <div class="logo">
+        <i class="fas fa-chart-line"></i>
+        <span>CRYPTO<span class="gradient-text">SIMULATOR</span></span>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li class="active"><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+          <li><a href="buycoins.html"><i class="fas fa-coins"></i>Buy coins in Market</a></li>
+          <li><a href="http://127.0.0.1:5001/predict"><i class="fas fa-robot"></i> AI Predictions</a></li>
+          <li><a href="http://127.0.0.1:5002/felixai"><i class="fas fa-comment-dots"></i> Felix AI</a></li>
+        </ul>
+      </nav>
+      <div class="user-menu">
+        <div class="user-avatar">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="user-dropdown">
+          <button class="dropdown-toggle" aria-expanded="false" aria-controls="user-dropdown-menu">
+            <div class="user-info">
+              <span id="usernameDisplay">User</span>
+              <i class="fas fa-caret-down"></i>
+            </div>
+          </button>
+          <ul id="user-dropdown-menu" class="dropdown-menu">
+            <li>
+              <a href="/settings.html" class="dropdown-item">
+                <i class="fas fa-cog"></i> Settings
+              </a>
+            </li>
+            <li>
+              <button id="logoutBtn" class="dropdown-item">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </button>
+            </li>
+          </ul>
+        </div>        
+      </div>
+    </div>
+    <div class="datetime-container">
+      <div class="date-display">
+        <span id="current-date"></span>
+      </div>
+      <div class="time-display">
+        <span id="current-time"></span>
+        <span class="seconds" id="current-seconds"></span>
+      </div>
+    </div>
+  </header>
 
-    <h3 class="fade-in-delay">Your Holdings:</h3>
-    <div id="holdingsList" class="fade-in-delay"></div>
+  <!-- Main Content -->
+  <main class="dashboard-container">
+    <div class="summary-cards">
+      <div class="card balance-card">
+        <h2 id="balanceText">💰 Total Portfolio: Loading...</h2>
+      </div>
+      <div class="card invested-card">
+        <h3 id="investedText">💼 Invested: ₹0</h3>
+      </div>
+      <div class="card profit-card">
+        <h3 id="profitText">📈 Profit/Loss: ₹0 (0%)</h3>
+      </div>
+    </div>
 
-    <button onclick="window.location.href='buycoins.html'" class="action-btn fade-in-delay">🌐 Explore More Coins</button>
-    <button onclick="window.location.href='http://127.0.0.1:5001/predict'" class="action-btn fade-in-delay">🧠 Predict Crypto Prices Using AI</button>
-    <button onclick="window.location.href='http://127.0.0.1:5002/felixai'" class="action-btn fade-in-delay">🤖 Ask your cryto doubts to Felix AI</button>
-    <button id="logoutBtn" class="logout-btn fade-in-delay">🚪 Logout</button>
-  </div>
+    <div class="welcome-section">
+      <h1 id="welcomeMsg" class="welcome-message">👋 Welcome</h1>
+    </div>
+
+    <div class="holdings-section">
+      <h2><i class="fas fa-wallet"></i> Your Holdings</h2>
+      <div id="holdingsList" class="holdings-grid"></div>
+    </div>
+
+    <div class="action-buttons">
+      <button onclick="window.location.href='buycoins.html'" class="action-btn">
+        <i class="fas fa-coins"></i> Explore More Coins
+      </button>
+      <button onclick="window.location.href='http://127.0.0.1:5001/predict'" class="action-btn">
+        <i class="fas fa-robot"></i> Predict Crypto Prices
+      </button>
+      <button onclick="window.location.href='http://127.0.0.1:5002/felixai'" class="action-btn">
+        <i class="fas fa-comment-dots"></i> Ask Felix AI
+      </button>
+      <button id="logoutBtn" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+  </main>
+
+  <!-- Floating Footer -->
+  <footer class="floating-footer">
+    <div class="footer-content">
+      <div class="footer-left">
+        <p>© 2025 Crypto simulator. Made By Joshi karan.</p>
+      </div>
+      <div class="footer-right">  
+        <a href="https://github.com/Joshikarank"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+  </footer>
 
   <script src="js/dashboard.js"></script>
+  <script src="js/header.js"></script>
 </body>
 </html>

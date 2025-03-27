@@ -7,7 +7,7 @@ from datetime import datetime
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 # Initialize Flask app
-app = Flask(__name__, static_folder='static', template_folder='templates')
+app = Flask(__name__)
 
 # Load .env
 load_dotenv()
@@ -49,6 +49,9 @@ def fetch_coin_details(coin_id):
     response = requests.get(url)
     coin_details = response.json()
 
+    # Debug: Print the response for troubleshooting
+    print(f"Coin details for {coin_id}: {coin_details}")
+
     return coin_details
 
 # Function to fetch news sentiment for a coin
@@ -66,17 +69,15 @@ def fetch_news_sentiment(coin_id):
     if "results" not in data:
         return "No sentiment data found."
 
-    news_articles = []
-    for article in data["results"]:
-        # Safely get 'content' field, if not available use "No content available"
-        content = article.get("content", "No content available")
-
-        news_articles.append({
+    news_articles = [
+        {
             "coin": coin_id,
             "title": article["title"],
-            "content": content,
+            "content": article.get("content", "No content available"),  # Ensure content key exists
             "timestamp": article["published_at"]
-        })
+        }
+        for article in data["results"]
+    ]
 
     # Sentiment analysis
     for article in news_articles:
@@ -87,32 +88,26 @@ def fetch_news_sentiment(coin_id):
     return news_articles
 
 # Function to feed data to Mistral and generate response
-def generate_mistral_response(user_input, pumping_coins=None, coin_details=None, sentiment_data=None):
-    # Check if the user input is about crypto or general
-    if "crypto" in user_input.lower() or "bitcoin" in user_input.lower() or "ethereum" in user_input.lower():
-        # Handle crypto-related queries
-        context = f"Here are the top pumping coins based on the 24-hour price change:\n"
-        for coin in pumping_coins:
-            context += f"Coin: {coin['coin'].capitalize()}, Pump: {coin['pump_percentage']}%\n"
-        
-        # Safely get coin details with default values if missing
-        name = coin_details.get('name', 'N/A')
-        symbol = coin_details.get('symbol', 'N/A')
-        price = coin_details.get('market_data', {}).get('current_price', {}).get('inr', 'N/A')
+def generate_mistral_response(user_input, pumping_coins, coin_details, sentiment_data):
+    # Create a prompt based on the data and user input
+    context = f"Here are the top pumping coins based on the 24-hour price change:\n"
+    for coin in pumping_coins:
+        context += f"Coin: {coin['coin'].capitalize()}, Pump: {coin['pump_percentage']}%\n"
+    
+    # Safely get coin details with default values if missing
+    name = coin_details.get('name', 'N/A')
+    symbol = coin_details.get('symbol', 'N/A')
+    price = coin_details.get('market_data', {}).get('current_price', {}).get('inr', 'N/A')
 
-        context += f"\nUser's Question: {user_input}\n\n"
-        context += f"Coin details:\nName: {name}\nSymbol: {symbol}\nPrice: {price}\n"
+    context += f"\nUser's Question: {user_input}\n\n"
+    context += f"Coin details:\nName: {name}\nSymbol: {symbol}\nPrice: {price}\n"
 
-        context += "\nNews Sentiment:\n"
-        for sentiment in sentiment_data:
-            context += f"Title: {sentiment['title']}, Sentiment: {sentiment['sentiment']}\n"
+    context += "\nNews Sentiment:\n"
+    for sentiment in sentiment_data:
+        context += f"Title: {sentiment['title']}, Sentiment: {sentiment['sentiment']}\n"
 
-        # Send the system prompt to Mistral for response generation
-        system_prompt = f"You are Felix, a helpful AI assistant. Use the following information to provide the best recommendation or answer:\n\n{context}\n\n"
-
-    else:
-        # Handle general queries
-        system_prompt = f"You are Felix, a helpful AI assistant. You provide advice and information on various topics including cryptocurrency. Respond to the following user's message: {user_input}"
+    # Send the system prompt to Mistral for response generation
+    system_prompt = f"You are Felix, a helpful AI assistant. Use the following information to provide the best recommendation or answer or ask only if the user asksabout its details:\n\n{context}\n\n"
 
     messages = [{"role": "system", "content": system_prompt}]
     response = client.chat.complete(model=model, messages=messages)
@@ -120,7 +115,6 @@ def generate_mistral_response(user_input, pumping_coins=None, coin_details=None,
 
     return reply
 
-# Flask route to serve the front-end UI
 @app.route('/felixai')
 def index():
     return render_template("index.html")
@@ -132,23 +126,21 @@ def chat():
     if not user_input:
         return jsonify({"error": "No message provided"}), 400
     
-    # Check if the query is about crypto or not
-    coin = None
+    # Extract coin from the user input
+    coin = user_input.split()[-1].lower()  # Simple coin extraction, can be enhanced
+
+    # Fetch top pumping coins
     pumping_coins = fetch_top_pumping_coins()
-    coin_details = None
-    sentiment_data = None
 
-    # If the user asked about a coin (simple coin extraction from input), fetch details and sentiment
-    if "bitcoin" in user_input.lower() or "ethereum" in user_input.lower():
-        coin = user_input.split()[-1].lower()  # Simple extraction of the last word as coin
-        coin_details = fetch_coin_details(coin)
-        sentiment_data = fetch_news_sentiment(coin)
+    # Check if the user asked for a specific coin and fetch details and sentiment
+    coin_details = fetch_coin_details(coin)
+    sentiment_data = fetch_news_sentiment(coin)
 
-    # Generate response from Mistral based on user input
+    # Generate response from Mistral
     reply = generate_mistral_response(user_input, pumping_coins, coin_details, sentiment_data)
     
     return jsonify({"response": reply}), 200
 
 # Run the Flask app
 if __name__ == '__main__':
-    app.run(debug=True, port=5002)
+    app.run(debug=True, port=5002)  # Use a different port if needed to avoid conflicts

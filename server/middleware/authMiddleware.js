@@ -3,6 +3,11 @@ const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
   try {
+    // Add this early in the middleware
+    if (req.path === '/settings.html' && !req.header("Authorization")) {
+      const token = req.cookies?.token || null;
+      if (!token) return res.redirect('/');
+    }
     // Get the token from the Authorization header
     const authHeader = req.header("Authorization");
 

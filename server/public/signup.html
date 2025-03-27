@@ -2,31 +2,98 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up - Crypto Paper Trading</title>
   <link rel="stylesheet" href="css/signupstyles.css">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="particles-container" id="particles-js"></div>
+  
+  <div class="hero-animation">
+    <lottie-player 
+      src="https://lottie.host/30509b43-62e9-4cc4-a463-396320503a50/5ZCkLCKjZF.lottie" 
+      background="transparent" 
+      speed="1" 
+      style="width: 100%; height: 100%;"
+      loop 
+      autoplay>
+    </lottie-player>
+  </div>
+
   <div class="container animate-fade-in">
-    <h1 class="slide-in-top">🆕 Create Your Account</h1>
-    <h2 class="subtitle slide-in-top-delay">Start Paper Trading with AI ✨</h2>
+    <div class="logo-container">
+      <div class="logo-icon">📈</div>
+      <h1 class="slide-in-top">Create Your Account</h1>
+    </div>
+    <h2 class="subtitle slide-in-top-delay">Start Your AI Trading Journey</h2>
 
-    <input type="text" id="name" placeholder="Name" required class="fade-in-delay" />
-    <input type="email" id="email" placeholder="Email" required class="fade-in-delay" />
-    <input type="password" id="password" placeholder="Password" required class="fade-in-delay" />
+    <div class="form-group">
+      <input type="text" id="name" placeholder=" " required class="fade-in-delay" />
+      <label for="name">Full Name</label>
+      <div class="underline"></div>
+    </div>
 
-    <button id="signupBtn" class="fade-in-delay">Create Account</button>
+    <div class="form-group">
+      <input type="email" id="email" placeholder=" " required class="fade-in-delay" />
+      <label for="email">Email</label>
+      <div class="underline"></div>
+    </div>
 
+    <div class="form-group">
+      <input type="password" id="password" placeholder=" " required class="fade-in-delay" />
+      <label for="password">Password</label>
+      <div class="underline"></div>
+      <div class="password-strength">
+        <div class="strength-bar"></div>
+        <span class="strength-text">Weak</span>
+      </div>
+    </div>
+
+    <div class="terms fade-in-delay">
+      <input type="checkbox" id="terms" required>
+      <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+    </div>
+
+    <button id="signupBtn" class="fade-in-delay">
+      <span>Create Account</span>
+      <div class="liquid"></div>
+    </button>
+    
     <p id="statusMsg" class="fade-in-delay"></p>
 
-    <p class="fade-in-delay">Already have an account? <a href="index.html">Login</a></p>
+    <div class="auth-links fade-in-delay">
+      <p>Already have an account? <a href="index.html">Login</a></p>
+    </div>
 
-    <p class="credits fade-in-delay">Made by <strong>Joshikaran</strong></p>
+    <div class="credits fade-in-delay">
+      <p>Made with <span class="heart">Brick by brick 🧱</span> by <strong>Joshikaran</strong></p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-github"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
   </div>
 
   <div class="marquee">
-    <p>💡 Smart trades &nbsp;&nbsp; 🤖 AI-driven decisions &nbsp;&nbsp; 📈 Track growth virtually &nbsp;&nbsp; 🧠 Learn without risk &nbsp;&nbsp; 🚀 Powered by passion</p>
+    <div class="marquee-content">
+      <span>💡 Smart trading strategies</span>
+      <span>🤖 AI-driven market analysis</span>
+      <span>📈 Virtual portfolio growth</span>
+      <span>🧠 Risk-free learning</span>
+      <span>🚀 Powered by cutting-edge technology</span>
+      <span>🔐 Secure & private</span>
+      <span>📊 Real-time market simulation</span>
+      <span>🎯 Precision trading signals</span>
+    </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <script src="js/signup.js"></script>
+  <script src="js/particles-config.js"></script>
+  <script src="js/password-strength.js"></script>
 </body>
 </html>

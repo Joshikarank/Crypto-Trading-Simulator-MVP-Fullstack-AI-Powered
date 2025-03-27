@@ -2,29 +2,83 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crypto Paper Trading with AI Assistant</title>
   <link rel="stylesheet" href="css/loginstyles.css">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="particles-container" id="particles-js"></div>
+  
+  <div class="hero-animation">
+    <lottie-player 
+      src="https://lottie.host/30509b43-62e9-4cc4-a463-396320503a50/5ZCkLCKjZF.lottie" 
+      background="transparent" 
+      speed="1" 
+      style="width: 100%; height: 100%;"
+      loop 
+      autoplay>
+    </lottie-player>
+  </div>
+
   <div class="container animate-fade-in">
-    <h1 class="slide-in-top">🚀 Crypto Paper Trading</h1>
-    <h2 class="subtitle slide-in-top-delay">with AI Assistant</h2>
+    <div class="logo-container">
+      <div class="logo-icon">🚀</div>
+      <h1 class="slide-in-top">Crypto Paper Trading</h1>
+    </div>
+    <h2 class="subtitle slide-in-top-delay">AI-Powered Virtual Trading Platform</h2>
 
-    <input type="email" id="email" placeholder="Email" required class="fade-in-delay" />
-    <input type="password" id="password" placeholder="Password" required class="fade-in-delay" />
+    <div class="form-group">
+      <input type="email" id="email" placeholder=" " required class="fade-in-delay" />
+      <label for="email">Email</label>
+      <div class="underline"></div>
+    </div>
 
-    <button id="loginBtn" class="fade-in-delay">Login</button>
-    <p class="fade-in-delay">Don't have an account? <a href="signup.html" id="signupLink">Sign up here</a></p>
+    <div class="form-group">
+      <input type="password" id="password" placeholder=" " required class="fade-in-delay" />
+      <label for="password">Password</label>
+      <div class="underline"></div>
+    </div>
+
+    <button id="loginBtn" class="fade-in-delay">
+      <span>Login</span>
+      <div class="liquid"></div>
+    </button>
+    
+    <div class="auth-links fade-in-delay">
+      <p>Don't have an account? <a href="signup.html" id="signupLink">Sign up here</a></p>
+      <a href="#" id="forgotPassword">Forgot password?</a>
+    </div>
 
     <p id="statusMsg" class="fade-in-delay"></p>
 
-    <p class="credits fade-in-delay">Made by <strong>Joshikaran</strong></p>
+    <div class="credits fade-in-delay">
+      <p>Made by <strong>Joshikaran</strong></p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-github"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
   </div>
 
   <div class="marquee">
-    <p>🌐 Completely virtual &nbsp;&nbsp; 🤖 AI-powered insights &nbsp;&nbsp; 📊 Predictive trading &nbsp;&nbsp; 💸 Smart portfolio simulation &nbsp;&nbsp; 🚀 Future of crypto trading</p>
+    <div class="marquee-content">
+      <span>🌐 Completely virtual trading</span>
+      <span>🤖 AI-powered market insights</span>
+      <span>📊 Predictive analytics</span>
+      <span>💸 Smart portfolio simulation</span>
+      <span>🔒 Secure & private</span>
+      <span>🚀 Future of crypto trading</span>
+      <span>📈 Real-time market data</span>
+      <span>🧠 Machine learning models</span>
+    </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <script src="js/auth.js"></script>
+  <script src="js/particles-config.js"></script>
 </body>
 </html>

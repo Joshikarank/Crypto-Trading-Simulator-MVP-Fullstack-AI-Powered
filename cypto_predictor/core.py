@@ -21,7 +21,7 @@ def fetch_hourly_data(coin, days=7):
     res = requests.get(url, params=params, headers=headers)
 
     if res.status_code != 200:
-        raise ValueError(f"Coin '{coin}' not found or CoinGecko API rate limit.")
+        raise ValueError(f"CoinGecko API rate limit.")
     if res.status_code == 429:
         raise ValueError("🚫 Rate limit hit. Try again in a few seconds.")
     data = res.json()
