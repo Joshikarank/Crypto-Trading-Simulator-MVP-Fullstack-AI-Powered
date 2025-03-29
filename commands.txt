@@ -2,5 +2,7 @@ npm start
 
 cd sever
 npx nodemon server.js
-
+ 
 (.venv) PS D:\crypto_paper> python felix_ai\pns.py
+
+python cypto_predictor\app.py

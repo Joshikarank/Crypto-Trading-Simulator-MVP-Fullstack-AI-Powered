@@ -50,6 +50,7 @@ def train_and_save_model(coin):
     df = build_features(df)
 
     X = df.drop(["timestamp", "price"], axis=1).iloc[:-1]
+    #adjust y = df["price"].shift("number of hours").dropna() for longer duration!
     y = df["price"].shift(-1).dropna()
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
