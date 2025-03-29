@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  welcome.textContent = `👋 Welcome, ${username}`;
+  welcome.textContent = `👋 Welcome, ${name}`;
 
   // 🔥 Fetch portfolio
   fetch(`http://localhost:5000/api/portfolio/${userId}`, {
