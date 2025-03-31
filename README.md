@@ -1,209 +1,260 @@
 # 💹 Felix AI: Crypto Trading & Forecasting Dashboard
 
 > **Author:** Joshikaran K  
-> **B.Tech CSE - SRMIST**  
-> **Graduation:** May 2024  
+> **B.Tech CSE - SRMIST** | Class of 2024  
+> [📽 Demo Video](https://youtu.be/Myz-V5QSbmA) | [🧭 Full Walkthrough](https://youtu.be/F4mY5Iw434c)
 
 ---
 
 ## 🧠 Project Summary
 
-Felix AI is a **full-stack AI-powered cryptocurrency dashboard and simulator** that allows users to:
+Felix AI is a **full-stack, AI-powered crypto dashboard** that lets users:
+- Trade cryptocurrencies with ₹1,000,000 virtual cash 💰  
+- Get ML-powered **price predictions** (XGBoost)  
+- Interact with a futuristic **AI assistant** named Felix 🤖  
+- View personalized portfolio growth, risk analysis & news signals 📊  
+- Experience a **super interactive UI/UX**, hand-built with HTML/CSS/JS  
 
-- Simulate real-time crypto trading using virtual money.
-- Predict coin prices using custom-trained ML models (XGBoost).
-- Visualize portfolio growth, profits/losses, and forecasts.
-- Interact with a personalized assistant (Felix AI) for insights and actions.
-
-All features are built **end-to-end by me — Brick by Brick 🧱**.
-
-To provide further proof of ownership, I recorded a complete **demo video** showcasing the working features and system integration. This video was created solely by me, and is available for verifiable access upon request.
+> Every feature was designed to simulate **how a real crypto trader thinks, acts, and evolves** — but safely and intelligently.
 
 ---
 
-## 🚀 Why I Made This
+## 🎯 MVP Vision
 
-I wanted to build a real-world application that blends:
+This project is built as a **potential product MVP** for:
+- Retail investors exploring trading with zero risk
+- Crypto beginners learning with guidance from Felix
+- Product testing of forecasting models + assistant-based UX
+- AI integration into personal finance dashboards
 
-- **Machine Learning + Finance**
-- **Frontend + Backend**
-- **Forecasting + Simulation**
-- **Real-world APIs + Databases**
-
-But beyond that, I wanted to prove something to myself — that with deep understanding and relentless focus, I could build an intelligent system, even with minimal resources. Every feature here wasn't just an add-on. It was **intentional**.
-
-> "If you can't afford rockets, build gliders. But make them fly." — Me
-
-I've shared my resume and portfolio with people ranging from seasoned developers to unemployed peers. Unfortunately, I’ve had a few painful experiences of project theft during these outreach attempts. For this reason, I decided **not to make this project open-source on GitHub**, despite how much I love the open dev culture. Protecting original work matters too.
+It validates the concept of a **personal crypto analyst & trader** assistant — fully local, dynamic, and extensible.
 
 ---
 
-## 🧩 What Problem Does It Solve?
+## 🧩 Real-World Problems Solved
 
-Most people:
-- Don’t understand how crypto trading works.
-- Can’t afford to experiment with real money.
-- Don’t get personalized insights or simple forecasting.
-
-### Felix AI solves that by:
-- Creating a **virtual trading simulator** with ₹1,000,000 paper money.
-- Showing **real-time predictions** using machine learning.
-- Offering a **personal assistant** (Felix AI) that can explain trades, give signals, and forecast market direction.
-- Presenting a **clear, beautiful dashboard** with profit/loss visualizations.
-
-It makes machine learning and finance feel intuitive and accessible — not intimidating.
+| Problem | Felix AI's Answer |
+|--------|------------------|
+| "I'm scared to trade real crypto" | ₹1,000,000 paper money simulator |
+| "How do I know when to buy/sell?" | AI forecasts + Felix's advice |
+| "I don’t understand technicals" | Felix explains trades in simple terms |
+| "Markets are too volatile" | Pump/volume alerts, sentiment warnings |
+| "I need a clean dashboard" | Super interactive UI, clear charts, instant P&L |
 
 ---
 
-## 🛠️ Tech Stack & Why I Chose Each
+## 🚀 Standout Features
 
-### 📦 Backend
-- **Node.js + Express**: Perfect for lightweight APIs and handling authentication and user data securely. Chosen for its async nature and modularity.
-- **MongoDB Atlas**: Fast and flexible NoSQL database — perfect for dynamic crypto portfolios and historical prediction logs.
-- **Flask (Python)**: Seamlessly runs XGBoost and ML pipelines. Lightweight yet powerful — ideal for inference tasks.
-- **JWT Auth**: Ensures that each user session is secure. Essential for individual portfolio isolation.
+### 💬 Felix AI — Your Crypto Companion
 
-### 💻 Frontend
-- **HTML, CSS, JS (Vanilla)**: No frameworks. Pure control. I built every interaction and animation manually — the UI is fully responsive and performance-optimized.
-- **Cyberpunk + Neon Design**: Because a futuristic AI tool should *look* the part too. It reflects ambition.
+> *"Think of Felix as your private analyst, strategist, and teacher."*
 
-### 📈 Data & AI
-- **CoinGecko API**: Reliable free source for crypto data.
-- **XGBoost**: After testing Prophet and LSTM, I leaned into XGBoost. It was computationally cheaper but performed surprisingly well with proper feature engineering. This shows my practical knowledge of trade-offs in ML.
-- **Custom Confidence Score**: Derived from past prediction accuracy and volume/price shifts — shows a clear understanding of error analysis.
+Built using a prompt-engineered LLM (Mistral-based), Felix can:
+- Analyze **your portfolio context** and give reasoning  
+- Understand **past prices, predictions, sentiment**  
+- Generate **actionable trading suggestions**
 
----
+#### 🧠 Example Prompts You Can Ask Felix
 
-## ✨ Special Features & Philosophy Behind Them
+> These work live in `index.html` chat UI (`/felixai` route):
 
-### ✅ Real-time Paper Trading
-I didn't just want a dashboard — I wanted simulation. A user can test investment strategies with zero risk. That teaches more than theory ever can.
+| Prompt | What Felix Does |
+|--------|----------------|
+| `"Should I sell my ETH now?"` | Compares your buy price, forecast, current price, pump risk |
+| `"What’s the risk on DOGE today?"` | Checks pump sniff data + volume spikes |
+| `"How accurate are your last 3 predictions?"` | Shows past predictions and accuracy scores |
+| `"Suggest a safe coin to invest now"` | Cross-checks sentiment, volume, forecast confidence |
+| `"Why did BTC spike yesterday?"` | Analyzes volume delta + sentiment delta |
+| `"Explain how your predictions work"` | Breaks down XGBoost model features |
 
-### 🧠 XGBoost Forecast Engine
-Rather than randomly guessing prices, I trained and validated models per coin, per timeframe. The system adjusts predictions based on new data. It proves my comfort with time series processing and lifecycle-aware retraining.
+#### 🧠 Code Behind Felix's Brain
 
-### 🤖 Felix AI Assistant — Not Just Chat, It *Thinks*
-Felix isn’t a typical chatbot.
-
-I used **Mistral LLM** as the core reasoning engine. But I layered on top of it:
-- Memory of user portfolio
-- Awareness of latest predictions
-- Access to pump/news sentiment
-
-Felix was trained (prompt-tuned) to be a *cyber-financial analyst*, blending precision and character. It reflects my grasp of LLM pipelines and Retrieval-Augmented Generation (RAG). 
-
-> Example: You can ask Felix *"Is now a good time to sell SOL?"* — and it will analyze your entry price, current forecast, pump risk, and even sentiment shifts to respond.
-
-### 🧠 Sentiment + Pump Sniffer
-Crypto is chaotic. Price doesn’t just follow charts — it follows tweets. That’s why I added modules to:
-- Detect abnormal price/volume spikes
-- Pull news sentiment per coin
-
-These tools are not gimmicks. They're fundamentals of modern quant strategies. I added them because I’ve studied how momentum traders operate.
-
-### 🧪 Predictive Logs & Accuracy
-Every forecast isn’t just shown — it’s stored and compared with actual values. The system learns from its own mistakes.
-
-This wasn't just about prediction. It was about **feedback loops** — and that's the core of **Reinforcement Learning**. While I haven’t added RL yet due to resource constraints, the architecture is modular and ready for it.
-
-I thought seriously about implementing RL for portfolio management decisions. While it's not in v1, I’ve set up enough hooks to introduce policy learning in future iterations.
-
-### 🔐 Secure Account System
-Every user has:
-- Private portfolio
-- Private model logs
-- Personalized AI experience
-
-Authentication wasn’t an afterthought. It was a necessity for multi-user simulation.
-
----
-
-## ⚠️ Real-World Constraints
-
-- **No Deployment Yet** — Couldn't afford domain/GPU cloud hosting.
-- **Some Missing Data** — Due to CoinGecko free-tier API limits. I added caching, limiters, and retry logic, but rate limits still hit occasionally.
-- **XGBoost over LSTM/Transformers** — LSTMs were too heavy on CPU. I benchmarked, tuned, and picked XGBoost intentionally.
-
-Still, everything works **locally** — smooth and effective.
-
-> This wasn’t built with money. It was built with knowledge.
-
----
-
-## 🧪 Running Locally (Step-by-Step)
-
-> You’ll need: Node.js, MongoDB URI, Python 3.8+, and virtualenv
-
-### 1. Start Node.js Express Backend
-```bash
-cd server
-npx nodemon server.js
+```python
+# pns.py
+if sudden_spike_detected(coin):
+    pump_risk[coin] = "HIGH"
+    
+# Flask app.py
+response = mistral_api(
+  prompt=f"""
+  User owns {coin} bought at ₹{buy_price}.
+  Predicted price = ₹{pred}, pump risk = {risk}%.
+  Respond with explanation and next move.
+  """
+)
 ```
 
-### 2. Start Prediction Engine (Flask + ML)
-```bash
-python cypto_predictor/app.py
+---
+
+## 🧠 Prediction Engine
+
+- Built using **XGBoost** — fast, scalable, and accurate with tabular time series
+- Trains coin-wise models on-the-fly and updates them over time
+- Forecasts up to 5 days ahead
+- Includes **custom confidence %**, based on volatility & historical accuracy
+
+```python
+def train_model(df):
+    features = extract_features(df)
+    model = xgb.XGBRegressor(...)
+    model.fit(X_train, y_train)
+    return model
 ```
 
-### 3. Start Pump Sniffer & News Sentiment Module
-```bash
-python felix_ai/pns.py
+🧪 Accuracy is stored and compared in Mongo:
+```json
+{
+  "timestamp": "2025-04-01 14:00",
+  "coin": "solana",
+  "predicted_price": 932,
+  "actual_price": 927,
+  "accuracy": 99.46
+}
 ```
 
-### 4. Open HTML files in Browser (e.g. dashboard.html)
-Use `Live Server` extension or any static file server.
+---
+
+## 📊 Portfolio Dashboard
+
+**Route:** `/dashboard.html`
+
+Displays:
+- **Total balance** (₹1M base + market-adjusted holdings)
+- **Invested amount**
+- **Profit/Loss in ₹ + %**
+- **Individual coin cards** showing:
+  - Buy price
+  - Current price
+  - P/L badge (color coded)
+  - Sell sliders + action buttons
+
+### 🧪 UI Example
+```js
+<h3 id="profitText">📈 Profit/Loss: ₹+3,521 (1.3%)</h3>
+<div class="holding">
+  <strong>Bitcoin</strong>
+  <p>Invested: ₹25,000 | Current: ₹28,521</p>
+</div>
+```
+
+---
+
+## ⚙️ Secure User Auth
+
+```js
+Authorization: Bearer <jwt_token>
+```
+
+- JWT token for every session
+- Routes are protected using middleware
+- Separate portfolios, predictions, and settings per user
+
+> **Bonus:** User can update profile or delete account directly from `/settings.html`
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Tech |
+|-------|------|
+| Frontend | HTML, CSS, JS (Vanilla) |
+| Backend | Node.js + Express |
+| ML API | Flask + XGBoost |
+| Database | MongoDB Atlas |
+| Auth | JWT |
+| Assistant | Mistral LLM (cloud) |
+| Data | CoinGecko API (real-time) |
+
+---
+
+## 🧬 Architecture Diagram
+
+```
+Browser <-> Node.js API <-> MongoDB
+            |
+            +---> Flask (XGBoost models)
+            |
+            +---> pns.py (Pump + Sentiment)
+                          |
+                          +---> Felix AI LLM API
+```
+
+---
+
+## 📺 Videos
+
+- ▶️ [Live Demo Video](https://youtu.be/Myz-V5QSbmA) — Walkthrough of paper trading + predictions + Felix
+- 🎞 [Full Walkthrough](https://youtu.be/F4mY5Iw434c) — Code + logic explained section by section
 
 ---
 
 ## 📁 Folder Structure (Simplified)
 ```
-/crypto_dashboard
-├── /server
-│   ├── routes (auth, portfolio, crypto)
-│   ├── models (User.js, Portfolio.js)
-│   ├── middleware (authMiddleware.js)
+Felix-AI/
+├── server/
+│   ├── routes/ (auth, crypto, portfolio)
+│   ├── models/ (User, Portfolio)
 │   └── server.js
-├── /cypto_predictor (Flask + ML)
-│   └── app.py
-├── /felix_ai
-│   └── pns.py
-├── /frontend
-│   ├── dashboard.html, login.html, predict.html, settings.html
-│   └── css/
+├── cypto_predictor/
+│   └── app.py  (Flask + ML)
+├── felix_ai/
+│   └── pns.py  (Pump/News logic)
+├── frontend/
+│   ├── index.html (Felix chat UI)
+│   ├── dashboard.html
+│   ├── settings.html
+│   └── buycoins.html
+```
+
+---
+
+## 🧪 Try It Locally
+
+> Requires: Python 3.8+, Node.js, MongoDB URI
+
+```bash
+# Start backend
+cd server && npx nodemon server.js
+
+# Start Flask model API
+cd ../cypto_predictor && python app.py
+
+# Start pump/news module
+cd ../felix_ai && python pns.py
+
+# Open frontend HTML (Live Server)
 ```
 
 ---
 
 ## 🧔 About Me
 
-**Joshikaran.K**  
-Graduate, B.Tech CSE @ SRMIST (2024)
+I'm **Joshikaran K**, a final-year B.Tech CSE student who builds **real systems** that simulate the real world — not just toy projects.
 
-I specialize in building complete products from scratch. From low-latency backends to AI forecasting pipelines, I enjoy solving real-world problems — not just doing tutorials.
-
-I understand:
-- LLM pipelines and personality tuning (Felix AI)
-- Time series modeling and retraining logic (XGBoost)
-- Trade-off between performance and computation
-- Real-world constraints and what to optimize first
-- Prompt engineering, RAG, and building assistants that act with reasoning
-
-Everything in this project is mine — no codegen, no copied UI kits, no teams. I even scripted and recorded the **demo video** to walk through every part of the system. if you want the link of the project post a comment in the tutorial video 
-
-> If you're reading this: I know what I'm doing. And I’m just getting started.
+What I understand:
+- Model lifecycle management
+- Prompt + LLM tuning
+- Forecasting vs nowcasting
+- UX that feels alive
+- MVP delivery under real-world constraints
 
 ---
 
-## 🙏 Final Note
+## ⚠️ Known Limitations
 
-If I had more resources, I would've:
-- Hosted this fully online with GPU-backed prediction
-- Used LSTM + deep learning forecasting
-- Integrated actual trading APIs like Binance
-- Added real-time sentiment scraping and whale tracking
-- Introduced Reinforcement Learning for AI trade suggestions
+- Free CoinGecko tier hits rate limits
+- Not deployed (no funds for hosting/GPU)
+- XGBoost over DL due to compute trade-off
+- Assistant uses API, not local LLM yet
 
-But even without that — this is **proof of vision, execution, and resilience**.
+---
 
-**Made with 💻 + 🧠 + ❤️ — Brick by Brick.**
+## 🧭 Final Word
 
+> *"If you're reading this, and you're wondering if one broke student can build intelligent apps that feel like the future... this is your proof."*
+
+- No templates  
+- No boilerplates  
+- No clones  
+
+**Built Brick by Brick 🧱 — With 💻 + 🧠 + ❤️.**
