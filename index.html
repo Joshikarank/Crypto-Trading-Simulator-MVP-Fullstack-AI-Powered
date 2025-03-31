@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Felix AI: Your Crypto Companion | Interactive Documentary</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6e3aff;
+            --secondary: #00f0ff;
+            --dark: #0a0a1a;
+            --light: #f0f0ff;
+            --accent: #ff3a6e;
+            --success: #3aff6e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(110, 58, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 240, 255, 0.15) 0%, transparent 50%);
+            animation: bgPulse 20s infinite alternate;
+        }
+        
+        @keyframes bgPulse {
+            0% { background-position: 0% 0%, 100% 100%; }
+            100% { background-position: 10% 10%, 90% 90%; }
+        }
+        
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero h1 {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(110, 58, 255, 0.3);
+            animation: textGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 10px rgba(110, 58, 255, 0.3); }
+            100% { text-shadow: 0 0 30px rgba(0, 240, 255, 0.5); }
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .cta-button:hover {
+            box-shadow: 0 15px 30px rgba(0, 240, 255, 0.4);
+            transform: translateY(-3px);
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .cta-button:hover::before {
+            opacity: 1;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+        
+        section {
+            padding: 5rem 2rem;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background: rgba(10, 10, 26, 0.7);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(110, 58, 255, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature-card:hover {
+            box-shadow: 0 15px 40px rgba(110, 58, 255, 0.3);
+            border-color: rgba(110, 58, 255, 0.4);
+            transform: translateY(-5px);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .feature-card p {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            margin: 2rem 0;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        
+        .tech-item {
+            background: rgba(110, 58, 255, 0.1);
+            border: 1px solid rgba(110, 58, 255, 0.3);
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        .tech-item:hover {
+            background: rgba(110, 58, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tech-item i {
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+        
+        .prompt-examples {
+            background: rgba(0, 240, 255, 0.05);
+            border-left: 4px solid var(--secondary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .prompt-examples h4 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .prompt-examples ul {
+            list-style-type: none;
+        }
+        
+        .prompt-examples li {
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed rgba(0, 240, 255, 0.2);
+            display: flex;
+            align-items: center;
+        }
+        
+        .prompt-examples li:last-child {
+            border-bottom: none;
+        }
+        
+        .prompt-examples li::before {
+            content: '▹';
+            color: var(--secondary);
+            margin-right: 0.8rem;
+        }
+        
+        .code-block {
+            background: rgba(10, 10, 26, 0.8);
+            border-radius: 10px;
+            padding: 1.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            border-left: 4px solid var(--accent);
+            position: relative;
+        }
+        
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent 90%, rgba(255, 58, 110, 0.05));
+            pointer-events: none;
+        }
+        
+        .code-keyword {
+            color: #6e3aff;
+        }
+        
+        .code-function {
+            color: #00f0ff;
+        }
+        
+        .code-string {
+            color: #3aff6e;
+        }
+        
+        .code-comment {
+            color: #666;
+            font-style: italic;
+        }
+        
+        .architecture {
+            display: flex;
+            justify-content: center;
+            margin: 3rem 0;
+            position: relative;
+            height: 400px;
+        }
+        
+        .architecture-diagram {
+            width: 100%;
+            max-width: 800px;
+            height: 100%;
+            position: relative;
+        }
+        
+        .arch-node {
+            position: absolute;
+            width: 120px;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            border: 2px solid;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .arch-node:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(110, 58, 255, 0.5);
+        }
+        
+        .arch-line {
+            position: absolute;
+            background: linear-gradient(90deg, #6e3aff, #00f0ff);
+            height: 2px;
+            transform-origin: left center;
+            animation: linePulse 2s infinite alternate;
+        }
+        
+        @keyframes linePulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.8; }
+        }
+        
+        .arch-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #00f0ff;
+            border-radius: 50%;
+            animation: dotPulse 1.5s infinite alternate;
+        }
+        
+        @keyframes dotPulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            100% { transform: scale(1.5); opacity: 1; }
+        }
+        
+        .testimonial {
+            background: rgba(255, 58, 110, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 58, 110, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial:hover {
+            box-shadow: 0 0 30px rgba(255, 58, 110, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .testimonial::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 8rem;
+            color: rgba(255, 58, 110, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+        
+        .testimonial p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-author {
+            font-weight: bold;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .testimonial-author img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        footer {
+            background: rgba(10, 10, 26, 0.8);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(110, 58, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .social-links a {
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .architecture {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles-js"></div>
+    
+    <section class="hero">
+        <h1>Felix AI</h1>
+        <p>Your intelligent crypto trading companion — powered by machine learning and designed for the future of finance</p>
+        <div class="cta-button" onclick="scrollToSection('features')">
+            Explore the Future <i class="fas fa-arrow-down"></i>
+        </div>
+        <div class="scroll-down" onclick="scrollToSection('features')">
+            <i class="fas fa-chevron-down fa-2x"></i>
+        </div>
+    </section>
+    
+    <section id="features">
+        <div class="container">
+            <h2 class="section-title">Revolutionizing Crypto Trading</h2>
+            
+            <div class="feature-card">
+                <h3>🧠 AI-Powered Forecasting</h3>
+                <p>Felix AI uses advanced XGBoost models to predict cryptocurrency prices with remarkable accuracy. Our system continuously learns from market patterns to provide you with the most reliable forecasts.</p>
+                
+                <div class="code-block">
+                    <span class="code-keyword">def</span> <span class="code-function">train_model</span>(df):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;features = <span class="code-function">extract_features</span>(df)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;model = xgb.<span class="code-function">XGBRegressor</span>(...)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;model.<span class="code-function">fit</span>(X_train, y_train)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> model<br>
+                    <br>
+                    <span class="code-comment"># Accuracy tracking in MongoDB</span><br>
+                    {<br>
+                    &nbsp;&nbsp;"timestamp": <span class="code-string">"2025-04-01 14:00"</span>,<br>
+                    &nbsp;&nbsp;"coin": <span class="code-string">"solana"</span>,<br>
+                    &nbsp;&nbsp;"predicted_price": 932,<br>
+                    &nbsp;&nbsp;"actual_price": 927,<br>
+                    &nbsp;&nbsp;"accuracy": 99.46<br>
+                    }
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <h3>💬 Felix - Your Personal Crypto Assistant</h3>
+                <p>Meet Felix, your 24/7 trading companion. Powered by Mistral LLM, Felix understands market context, your portfolio, and can explain complex concepts in simple terms.</p>
+                
+                <div class="prompt-examples">
+                    <h4>🧠 Example Prompts You Can Ask Felix:</h4>
+                    <ul>
+                        <li>"Should I sell my ETH now?" - Compares your buy price, forecast, current price, pump risk</li>
+                        <li>"What's the risk on DOGE today?" - Checks pump sniff data + volume spikes</li>
+                        <li>"How accurate are your last 3 predictions?" - Shows past predictions and accuracy scores</li>
+                        <li>"Suggest a safe coin to invest now" - Cross-checks sentiment, volume, forecast confidence</li>
+                        <li>"Why did BTC spike yesterday?" - Analyzes volume delta + sentiment delta</li>
+                        <li>"Explain how your predictions work" - Breaks down XGBoost model features</li>
+                    </ul>
+                </div>
+                
+                <h4 style="margin-top: 2rem;">🧠 Code Behind Felix's Brain</h4>
+                <div class="code-block">
+                    <span class="code-comment"># pns.py</span><br>
+                    <span class="code-keyword">if</span> sudden_spike_detected(coin):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;pump_risk[coin] = <span class="code-string">"HIGH"</span><br>
+                    <br>
+                    <span class="code-comment"># Flask app.py</span><br>
+                    response = mistral_api(<br>
+                    &nbsp;&nbsp;prompt=<span class="code-string">f"""</span><br>
+                    &nbsp;&nbsp;User owns {coin} bought at ₹{buy_price}.<br>
+                    &nbsp;&nbsp;Predicted price = ₹{pred}, pump risk = {risk}%.<br>
+                    &nbsp;&nbsp;Respond with explanation and next move.<br>
+                    &nbsp;&nbsp;<span class="code-string">"""</span><br>
+                    )
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <h3>💰 Virtual Trading Simulator</h3>
+                <p>Practice with ₹1,000,000 virtual cash in real market conditions. Perfect your strategy without risking real money.</p>
+                
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/Myz-V5QSbmA?si=89GoAN_ZgEoAitT9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                
+                <h4 style="margin-top: 2rem;">📊 Portfolio Dashboard Example</h4>
+                <div class="code-block">
+                    &lt;h3 id="profitText"&gt;📈 Profit/Loss: ₹+3,521 (1.3%)&lt;/h3&gt;<br>
+                    &lt;div class="holding"&gt;<br>
+                    &nbsp;&nbsp;&lt;strong&gt;Bitcoin&lt;/strong&gt;<br>
+                    &nbsp;&nbsp;&lt;p&gt;Invested: ₹25,000 | Current: ₹28,521&lt;/p&gt;<br>
+                    &lt;/div&gt;
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <h3>⚙️ Secure User Auth</h3>
+                <p>JWT token-based authentication protects all user data and transactions.</p>
+                <div class="code-block">
+                    Authorization: Bearer &lt;jwt_token&gt;<br><br>
+                    <span class="code-comment">// Routes are protected using middleware</span><br>
+                    <span class="code-comment">// Separate portfolios per user</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="architecture" style="background: rgba(10, 10, 26, 0.5);">
+        <div class="container">
+            <h2 class="section-title">System Architecture</h2>
+            
+            <div class="architecture">
+                <div class="architecture-diagram" id="archDiagram">
+                    <!-- Nodes will be added by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🧬 Tech Stack</h3>
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <i class="fab fa-html5"></i>
+                        <span>HTML/CSS/JS</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-node-js"></i>
+                        <span>Node.js + Express</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-python"></i>
+                        <span>Python + Flask</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-database"></i>
+                        <span>MongoDB Atlas</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-brain"></i>
+                        <span>XGBoost</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-robot"></i>
+                        <span>Mistral LLM</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-coins"></i>
+                        <span>CoinGecko API</span>
+                    </div>
+                </div>
+                
+                <h4 style="margin-top: 2rem;">📁 Folder Structure</h4>
+                <div class="code-block">
+                    Felix-AI/<br>
+                    ├── server/<br>
+                    │   ├── routes/ (auth, crypto, portfolio)<br>
+                    │   ├── models/ (User, Portfolio)<br>
+                    │   └── server.js<br>
+                    ├── cypto_predictor/<br>
+                    │   └── app.py  (Flask + ML)<br>
+                    ├── felix_ai/<br>
+                    │   └── pns.py  (Pump/News logic)<br>
+                    ├── frontend/<br>
+                    │   ├── index.html (Felix chat UI)<br>
+                    │   ├── dashboard.html<br>
+                    │   ├── settings.html<br>
+                    │   └── buycoins.html
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="demo">
+        <div class="container">
+            <h2 class="section-title">See Felix in Action</h2>
+            
+            <div class="grid">
+                <div>
+                    <h3 style="text-align: center; margin-bottom: 1rem;">Live Demo</h3>
+                    <div class="video-container">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/Myz-V5QSbmA?si=89GoAN_ZgEoAitT9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="text-align: center; margin-bottom: 1rem;">Full Walkthrough</h3>
+                    <div class="video-container">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/F4mY5Iw434c?si=EmjVpR1lncUkCKMg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial">
+                <p>"Felix AI represents exactly what the crypto space needs - intelligent guidance without the complexity. The virtual trading simulator alone has helped me understand market dynamics better than any course or book."</p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
+                    <span>Alex R., Crypto Enthusiast</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" style="background: rgba(10, 10, 26, 0.7);">
+        <div class="container">
+            <h2 class="section-title">About the Project</h2>
+            
+            <div class="feature-card">
+                <h3>🎯 MVP Vision</h3>
+                <p>This project is built as a <strong>potential product MVP</strong> for:</p>
+                <ul style="margin: 1rem 0 1rem 2rem;">
+                    <li>Retail investors exploring trading with zero risk</li>
+                    <li>Crypto beginners learning with guidance from Felix</li>
+                    <li>Product testing of forecasting models + assistant-based UX</li>
+                    <li>AI integration into personal finance dashboards</li>
+                </ul>
+                <p>It validates the concept of a <strong>personal crypto analyst & trader</strong> assistant — fully local, dynamic, and extensible.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🧩 Real-World Problems Solved</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0;">
+                    <tr style="background: rgba(110, 58, 255, 0.1);">
+                        <th style="padding: 1rem; text-align: left; border-bottom: 1px solid rgba(110, 58, 255, 0.3);">Problem</th>
+                        <th style="padding: 1rem; text-align: left; border-bottom: 1px solid rgba(110, 58, 255, 0.3);">Felix AI's Answer</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; border-bottom: 1px solid rgba(110, 58, 255, 0.1);">"I'm scared to trade real crypto"</td>
+                        <td style="padding: 1rem; border-bottom: 1px solid rgba(110, 58, 255, 0.1);">₹1,000,000 paper money simulator</td>
+                    </tr>
+                    <tr style="background: rgba(110, 58, 255, 0.05);">
+                        <td style="padding: 1rem; border-bottom: 1px solid rgba(110, 58, 255, 0.1);">"How do I know when to buy/sell?"</td>
+                        <td style="padding: 1rem; border-bottom: 1px solid rgba(110, 58, 255, 0.1);">AI forecasts + Felix's advice</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; border-bottom: 1px solid rgba(110, 58, 255, 0.1);">"I don't understand technicals"</td>
+                        <td style="padding: 1rem; border-bottom: 1px solid rgba(110, 58, 255, 0.1);">Felix explains trades in simple terms</td>
+                    </tr>
+                    <tr style="background: rgba(110, 58, 255, 0.05);">
+                        <td style="padding: 1rem; border-bottom: 1px solid rgba(110, 58, 255, 0.1);">"Markets are too volatile"</td>
+                        <td style="padding: 1rem; border-bottom: 1px solid rgba(110, 58, 255, 0.1);">Pump/volume alerts, sentiment warnings</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem;">"I need a clean dashboard"</td>
+                        <td style="padding: 1rem;">Super interactive UI, clear charts, instant P&L</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="feature-card">
+                <h3>⚠️ Known Limitations</h3>
+                <ul style="margin: 1rem 0 1rem 2rem;">
+                    <li>Free CoinGecko tier hits rate limits</li>
+                    <li>Not deployed (no funds for hosting/GPU)</li>
+                    <li>XGBoost over DL due to compute trade-off</li>
+                    <li>Assistant uses API, not local LLM yet</li>
+                </ul>
+            </div>
+            
+            <div class="testimonial">
+                <p>"If you're reading this, and you're wondering if one broke student can build intelligent apps that feel like the future... this is your proof."</p>
+                <p style="font-style: italic; margin-top: 1rem;">Built Brick by Brick 🧱 — With 💻 + 🧠 + ❤️.</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <h3>Felix AI</h3>
+        <p>Your intelligent crypto trading companion</p>
+        
+        <div class="social-links">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        
+        <p>&copy; 2024 Joshikaran K. All rights reserved.</p>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize particles.js
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": ["#6e3aff", "#00f0ff", "#ff3a6e"]
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#6e3aff",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+        
+        // Smooth scrolling
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+        
+        // Create animated architecture diagram
+        function createArchitectureDiagram() {
+            const container = document.getElementById('archDiagram');
+            const width = container.offsetWidth;
+            const height = 400;
+            
+            // Nodes
+            const nodes = [
+                { id: 'browser', name: 'Browser', x: width * 0.1, y: height * 0.2, color: '#6e3aff' },
+                { id: 'node', name: 'Node.js API', x: width * 0.4, y: height * 0.2, color: '#00f0ff' },
+                { id: 'mongo', name: 'MongoDB', x: width * 0.4, y: height * 0.6, color: '#3aff6e' },
+                { id: 'flask', name: 'Flask (XGBoost)', x: width * 0.7, y: height * 0.2, color: '#ff3a6e' },
+                { id: 'felix', name: 'Felix AI LLM', x: width * 0.7, y: height * 0.6, color: '#ffb43a' }
+            ];
+            
+            // Connections
+            const connections = [
+                { from: 'browser', to: 'node', dash: true },
+                { from: 'node', to: 'mongo' },
+                { from: 'node', to: 'flask', dash: true },
+                { from: 'flask', to: 'felix' }
+            ];
+            
+            // Create nodes
+            nodes.forEach(node => {
+                const el = document.createElement('div');
+                el.className = 'arch-node';
+                el.style.left = `${node.x}px`;
+                el.style.top = `${node.y}px`;
+                el.style.borderColor = node.color;
+                el.style.boxShadow = `0 0 15px ${node.color}`;
+                el.textContent = node.name;
+                container.appendChild(el);
+            });
+            
+            // Create connections
+            connections.forEach(conn => {
+                const fromNode = nodes.find(n => n.id === conn.from);
+                const toNode = nodes.find(n => n.id === conn.to);
+                
+                const length = Math.sqrt(
+                    Math.pow(toNode.x - fromNode.x, 2) + 
+                    Math.pow(toNode.y - fromNode.y, 2)
+                );
+                const angle = Math.atan2(
+                    toNode.y - fromNode.y, 
+                    toNode.x - fromNode.x
+                ) * 180 / Math.PI;
+                
+                const line = document.createElement('div');
+                line.className = 'arch-line';
+                line.style.width = `${length}px`;
+                line.style.left = `${fromNode.x}px`;
+                line.style.top = `${fromNode.y + 40}px`;
+                line.style.transform = `rotate(${angle}deg)`;
+                if (conn.dash) {
+                    line.style.background = `linear-gradient(90deg, ${fromNode.color}, ${toNode.color})`;
+                    line.style.animation = 'linePulse 2s infinite alternate';
+                }
+                container.appendChild(line);
+                
+                // Add animated dots along the connection
+                if (!conn.dash) {
+                    for (let i = 0.2; i < 1; i += 0.2) {
+                        const dot = document.createElement('div');
+                        dot.className = 'arch-dot';
+                        dot.style.left = `${fromNode.x + (toNode.x - fromNode.x) * i}px`;
+                        dot.style.top = `${fromNode.y + 40 + (toNode.y - fromNode.y) * i}px`;
+                        dot.style.animationDelay = `${i * 0.5}s`;
+                        container.appendChild(dot);
+                    }
+                }
+            });
+        }
+        
+        // Initialize diagram when page loads
+        window.addEventListener('load', createArchitectureDiagram);
+        window.addEventListener('resize', () => {
+            document.getElementById('archDiagram').innerHTML = '';
+            createArchitectureDiagram();
+        });
+    </script>
+</body>
+</html>
