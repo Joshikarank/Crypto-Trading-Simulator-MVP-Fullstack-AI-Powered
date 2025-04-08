@@ -56,7 +56,7 @@ To run all 3 models **(XGBoost + Prophet + LSTM)** smoothly with live retraining
 | RAM             | 16 GB or more             |
 | Cores           | 4+ physical cores         |
 | Platform        | Use [**Vast.ai**](https://vast.ai) — cheap GPU rentals |
-you can rent gpu fo lowest cost
+you can rent gpu fo lowest costzz
 ---
 
 ## 💸 Personal Spend & Reality
@@ -94,7 +94,9 @@ Felix AI is an **end-to-end AI crypto dashboard** that lets users:
 - 📊 Monitor forecast accuracy over time
 
 It’s like building your own quant trading system — without touching a rupee.
+All features are built **end-to-end by me — Brick by Brick 🧱**.
 
+To provide further proof of ownership, I recorded a complete **demo video** showcasing the working features and system integration. This video was created solely by me, and is available for verifiable access upon request.
 ---
 
 ## 🧩 Problems Solved
@@ -106,6 +108,19 @@ It’s like building your own quant trading system — without touching a rupee.
 | Manual refresh for new prices | ✅ Hourly background auto-predictor |
 | No learning from past predictions | ✅ Logs accuracy and results for analysis |
 | Retraining is too frequent | ✅ Now only retrains when needed (model age logic) |
+Most people:
+- Don’t understand how crypto trading works.
+- Can’t afford to experiment with real money.
+- Don’t get personalized insights or simple forecasting.
+
+### Felix AI solves that by:
+- Creating a **virtual trading simulator** with ₹1,000,000 paper money.
+- Showing **real-time predictions** using machine learning.
+- Offering a **personal assistant** (Felix AI) that can explain trades, give signals, and forecast market direction.
+- Presenting a **clear, beautiful dashboard** with profit/loss visualizations.
+
+It makes machine learning and finance feel intuitive and accessible — not intimidating.
+
 
 ---
 
@@ -173,7 +188,6 @@ So I prioritized **smart forecasting + live accuracy logging** over fancy retros
 
 ## 📁 Folder Structure
 
-```
 /crypto_dashboard
 ├── /server                   # Node backend (auth, API)
 ├── /cypto_predictor         # Flask + ML ensemble models
@@ -186,15 +200,61 @@ So I prioritized **smart forecasting + live accuracy logging** over fancy retros
 │   ├── dashboard.html       # UI: Predictions, portfolio
 │   ├── settings.html, login.html, etc.
 │   └── css/                 # Styles
-```
+
+
+---
+### 🤖 Felix AI Assistant — Not Just Chat, It *Thinks*
+Felix isn’t a typical chatbot.
+
+I used **Mistral LLM** as the core reasoning engine. But I layered on top of it:
+- Memory of user portfolio
+- Awareness of latest predictions
+- Access to pump/news sentiment
+
+Felix was trained (prompt-tuned) to be a *cyber-financial analyst*, blending precision and character. It reflects my grasp of LLM pipelines and Retrieval-Augmented Generation (RAG). 
+
+> Example: You can ask Felix *"Is now a good time to sell SOL?"* — and it will analyze your entry price, current forecast, pump risk, and even sentiment shifts to respond.
+
+### 🧠 Sentiment + Pump Sniffer
+Crypto is chaotic. Price doesn’t just follow charts — it follows tweets. That’s why I added modules to:
+- Detect abnormal price/volume spikes
+- Pull news sentiment per coin
+
+These tools are not gimmicks. They're fundamentals of modern quant strategies. I added them because I’ve studied how momentum traders operate.
+
+### 🧪 Predictive Logs & Accuracy
+Every forecast isn’t just shown — it’s stored and compared with actual values. The system learns from its own mistakes.
+
+This wasn't just about prediction. It was about **feedback loops** — and that's the core of **Reinforcement Learning**. While I haven’t added RL yet due to resource constraints, the architecture is modular and ready for it.
+
+I thought seriously about implementing RL for portfolio management decisions. While it's not in v1, I’ve set up enough hooks to introduce policy learning in future iterations.
+
+### 🔐 Secure Account System
+Every user has:
+- Private portfolio
+- Private model logs
+- Personalized AI experience
+
+Authentication wasn’t an afterthought. It was a necessity for multi-user simulation.
 
 ---
 
+## ⚠️ Real-World Constraints
+
+- **No Deployment Yet** — Couldn't afford domain/GPU cloud hosting.
+- **Some Missing Data** — Due to CoinGecko free-tier API limits. I added caching, limiters, and retry logic, but rate limits still hit occasionally.
+- **XGBoost over LSTM/Transformers** — LSTMs were too heavy on CPU. I benchmarked, tuned, and picked XGBoost intentionally.
+
+Still, everything works **locally** — smooth and effective.
+
+> This wasn’t built with money. It was built with knowledge.
+
+---
 ## 🛠️ How To Run
 
 > You’ll need Python 3.8+, Mongo URI, CryptoPanic API key, and Node.js
 
-```bash
+bash
 # 1. Start backend
 cd server
 npx nodemon server.js
@@ -203,12 +263,12 @@ npx nodemon server.js
 cd cypto_predictor
 python app.py
 
-# 3. Optional: Run Felix AI module
+# 3. Run Felix AI module 
 cd ../felix_ai
 python pns.py
 
 # 4. Open dashboard in browser (index.html or dashboard.html)
-```
+
 
 ---
 
@@ -236,3 +296,4 @@ built by one person, on one laptop, with one obsession: **to learn and build.**
 — Joshikaran (Felix AI Creator)**
 
 ---
+
