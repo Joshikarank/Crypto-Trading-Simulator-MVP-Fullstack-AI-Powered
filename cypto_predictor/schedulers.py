@@ -16,11 +16,15 @@ def backtest_loop(coin_id):
         time.sleep(3600)
 
 
-def start_background_predictions(watchlist=None):
-    if watchlist is None:
-        from app import load_watchlist
-        watchlist = load_watchlist()
+def start_background_predictions(watchlist):
+    def run_prediction(coin):
+        while True:
+            try:
+                print(f"🔁 Running hourly prediction for {coin}")
+                predict_latest(coin)
+            except Exception as e:
+                print(f"❌ Error while predicting {coin}: {e}")
+            time.sleep(3600)  # Sleep for 1 hour
 
     for coin in watchlist:
-        thread = threading.Thread(target=backtest_loop, args=(coin,), daemon=True)
-        thread.start()
+        threading.Thread(target=run_prediction, args=(coin,), daemon=True).start()

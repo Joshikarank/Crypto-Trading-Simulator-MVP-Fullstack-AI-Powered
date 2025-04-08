@@ -187,3 +187,129 @@ def train_and_save_models(coin):
     # Train XGBoost
 # ::contentReference[oaicite:0]{index=0}
  
+def is_model_outdated(path, max_age_minutes=60):
+    """
+    Checks if a saved model file is older than a given threshold (in minutes).
+
+    Args:
+        path (str): Path to the model file.
+        max_age_minutes (int): Time limit in minutes.
+
+    Returns:
+        bool: True if outdated or missing, else False.
+    """
+    if not os.path.exists(path):
+        return True
+    modified = datetime.fromtimestamp(os.path.getmtime(path))
+    return (datetime.now() - modified) > timedelta(minutes=max_age_minutes)
+
+
+def save_prediction_log(coin, entry):
+    """
+    Saves prediction results to log file.
+
+    Args:
+        coin (str): Coin ID
+        entry (dict): Contains timestamp, predicted_price, actual_price, accuracy
+    """
+    log_path = f"{LOG_DIR}/{coin}_log.json"
+    history = []
+    if os.path.exists(log_path):
+        try:
+            with open(log_path, "r") as f:
+                history = json.load(f)
+        except json.JSONDecodeError:
+            os.remove(log_path)  # reset corrupted log
+            history = []
+    history.append(entry)
+    history = history[-5:]
+    with open(log_path, "w") as f:
+        json.dump(history, f, indent=2)
+
+
+def load_prediction_log(coin, hours=5):
+    """
+    Loads recent prediction history for a coin.
+
+    Args:
+        coin (str): Coin ID
+        hours (int): How many hours of history to load
+
+    Returns:
+        list: Filtered prediction log entries
+    """
+    log_path = f"{LOG_DIR}/{coin}_log.json"
+    if not os.path.exists(log_path):
+        return []
+
+    try:
+        with open(log_path, "r") as f:
+            logs = json.load(f)
+    except json.JSONDecodeError:
+        os.remove(log_path)
+        return []
+
+    ist = timezone("Asia/Kolkata")
+    now = datetime.now(ist)
+    recent_logs = [
+        entry for entry in logs
+        if ist.localize(datetime.strptime(entry["timestamp"], "%Y-%m-%d %H:%M")) >= (now - timedelta(hours=hours))
+    ]
+    return recent_logs
+
+
+def predict_latest(coin):
+    """
+    Predicts next hour price using the latest trained XGBoost model.
+    Automatically retrains if model is outdated.
+
+    Returns:
+        dict: Forecast results with logging
+    """
+    model_path = f"{MODEL_DIR}/{coin}_xgb_model.json"
+
+    # 🔄 Check for retrain need
+    if is_model_outdated(model_path, max_age_minutes=60):
+        print(f"🔄 Retraining model for {coin}...")
+        train_and_save_models(coin)
+
+    df = fetch_hourly_data(coin)
+    df = build_features(df, coin)
+
+    X = df.drop(["timestamp", "price"], axis=1)
+    y_true = df["price"].shift(-1).dropna()
+
+    model = xgb.XGBRegressor()
+    model.load_model(model_path)
+
+    preds = model.predict(X)
+    mae = mean_absolute_error(y_true, preds)
+
+    last_input = X.iloc[-1]
+    last_pred = model.predict(pd.DataFrame([last_input]))[0]
+    actual = df.iloc[-1]["price"]
+    ts_utc = df.iloc[-1]["timestamp"]
+    ist = timezone("Asia/Kolkata")
+    ts_ist = ts_utc.tz_localize("UTC").astimezone(ist)
+    predicted_ts = ts_ist + timedelta(hours=1)
+
+    confidence = round(100 - (mae / df["price"].mean() * 100), 2)
+
+    log_entry = {
+        "timestamp": predicted_ts.strftime("%Y-%m-%d %H:%M"),
+        "predicted_price": float(round(last_pred, 2)),
+        "actual_price": float(round(actual, 2)),
+        "accuracy": float(confidence)
+    }
+
+    save_prediction_log(coin, log_entry)
+
+    return {
+        "coin": coin.capitalize(),
+        "predicted_price": log_entry["predicted_price"],
+        "actual_price": log_entry["actual_price"],
+        "confidence": log_entry["accuracy"],
+        "last_updated": datetime.fromtimestamp(os.path.getmtime(model_path)).strftime("%Y-%m-%d %H:%M:%S"),
+        "timestamp": log_entry["timestamp"],
+        "history": load_prediction_log(coin)[::-1]
+    }

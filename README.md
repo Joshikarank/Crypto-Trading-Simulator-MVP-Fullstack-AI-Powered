@@ -22,7 +22,8 @@ Felix AI has evolved from a basic XGBoost predictor into a **multi-model ensembl
 
 ---
 
-## ⚠️ Before You Use
+##⚠️WARNING ⚠️⚠️ Before You Use⚠️
+Felix AI v2 isn’t a toy script. It retrains models hourly, fetches live APIs, computes ensemble forecasts, and logs predictions. That’s **ML + sentiment + real-time I/O**.
 
 **This system is heavy.** It uses:
 - Real-time API calls (CoinGecko + CryptoPanic)
@@ -30,11 +31,55 @@ Felix AI has evolved from a basic XGBoost predictor into a **multi-model ensembl
 - Threaded scheduling
 - In-memory inference (XGBoost, Prophet, LSTM)
 
-### 🚨 System Requirements:
-- ✅ Minimum: **8 GB RAM**, **i5/Ryzen processor**
-- ✅ Recommended: **Cloud GPU (e.g., Colab Pro, Lambda Labs, Paperspace)**
-- ⚠️ Do **not** expect smooth performance on low-end laptops
-- ⏱️ **24/7 running is recommended** for full forecasting logs
+---
+
+### 💻 Local System (Minimum) - Just to see the output dont expect pro
+| Component | Minimum |
+|----------|---------|
+| RAM      | 8 GB (bare minimum, no multitasking) |
+| CPU      | i5 / Ryzen 5 or better |
+| Storage  | SSD recommended (model writes) |
+| OS       | Linux or Windows 10 |
+
+⚠️ **Don’t even try running Prophet + LSTM training together** on 4GB RAM — you’ll brick your Computer.
+
+---
+
+## 🔥 Recommended Setup (Cloud or Dedicated GPU)
+
+To run all 3 models **(XGBoost + Prophet + LSTM)** smoothly with live retraining:
+
+| Resource        | Spec                      |
+|----------------|---------------------------|
+| GPU (preferred) | **NVIDIA Tesla T4 / V100 / A10** |
+| vRAM            | **>= 12 GB** for LSTM stability |
+| RAM             | 16 GB or more             |
+| Cores           | 4+ physical cores         |
+| Platform        | Use [**Vast.ai**](https://vast.ai) — cheap GPU rentals |
+you can rent gpu fo lowest cost
+---
+
+## 💸 Personal Spend & Reality
+
+> I already **spent my own money** just to test the model predictions on a small time window (~2 weeks).  
+> I was shocked by how **accurate** it was — better than some paid tools.
+
+But cloud GPUs for large-scale backtesting or deep retraining?  
+I couldn’t afford them. And I didn’t fake anything.
+
+This project was built on truth, not marketing.
+
+---
+
+### 🔁 Felix AI Is Meant To Run 24/7
+
+If you deploy this on a cloud GPU:
+- Predictions log themselves
+- Models auto-retrain hourly
+- Backtests write to file for insights
+
+You basically get a self-learning, sentiment-aware quant bot.  
+**Let it run. Watch it grow.**
 
 ---
 
